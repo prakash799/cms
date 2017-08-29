@@ -115,28 +115,23 @@ public class UserController {
 	}
 	
 	@RequestMapping(value= {"getuserdetails"},method= {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
-	public @ResponseBody  User getUserDetails(@RequestParam(value="id",required=true)long id,@ModelAttribute("user")@Valid User user,Model model,BindingResult result,HttpServletResponse response) {
-		//String userId=id+"";
-		if(id!=0) {
+	public @ResponseBody  User getUserDetails(@RequestParam(value="id",required=true)long id,@ModelAttribute("user")User user,Model model,HttpServletResponse response) {
+		String userId=id+"";
+		if(id!=0) 
 			user = this.userService.getUserById(id);
-			}else {
-				try {
-					response.sendRedirect("showuserdetails");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		return user;
+			return user;
 	}
 	
-	@RequestMapping(value="updateuserdetails",method=RequestMethod.POST)
-	public ModelAndView updateUser(@RequestParam(value="id",required=true)long id, @Valid User user,Model model,BindingResult result,HttpServletResponse response){
-		user=this.userService.getUserById(id);
-		if(user!=null) {
-			System.out.println("MODEL------>"+model);
-				this.userService.updateUser(user);
+	@RequestMapping(value="udpateuserdetails",method= {RequestMethod.POST,RequestMethod.GET})
+	public void updateUser(@ModelAttribute("user")User user,Model model,HttpServletResponse response) {
+		User u=null;
+		u=user;
+		this.userService.updateUser(u);
+		model.addAttribute(u);
+		try {
+			response.sendRedirect("showuserdetails");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return new ModelAndView("showuserdetails");
 	}
-	
 }

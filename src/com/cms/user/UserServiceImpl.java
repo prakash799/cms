@@ -58,12 +58,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User validateUser(String loginid, String password) throws NoSuchAlgorithmException,NumberFormatException {
-		String validatedPassword = validatePassword(password);
-		User validUser = getUserById(Long.valueOf(loginid));
-		System.out.println("Password------------>"+validUser);
-		if (validUser != null && validUser.getPassword() != null) {
-			if(validatedPassword.equals(validUser.getPassword())) {
-				return validUser;
+		//String validatedPassword = validatePassword(password);
+		//System.out.println("validatedPassword------"+validatedPassword);
+		User validatedUser = userDao.validateUser(loginid);
+		System.out.println("Password------------>"+validatedUser.getPassword().hashCode());
+		if (validatedUser != null ) {
+			if(password.equals(validatedUser.getPassword())) {
+				return validatedUser;
 			}
 		}
 		return null;

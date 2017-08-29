@@ -80,9 +80,4 @@ public class UserDaoImpl implements UserDao{
 		List<User> list = currentSession.createCriteria(User.class).list();
 		return list;
 	}
-
-	public static void main(String[] args) {
-		User userById = new UserDaoImpl().getUserById(889);
-		System.out.println(userById);
-	}
 }
