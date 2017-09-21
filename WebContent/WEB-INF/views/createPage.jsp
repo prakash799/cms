@@ -43,7 +43,7 @@
 			<div class="col-sm-3 col-sm-offset-1">
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<button type="reset" class="btn btn-primary">Reset</button>
-				<form:errors path="pid" cssClass="error"/>
+				<label style="size: 30px;"><form:errors path="pid" cssClass="error"/></label>
 			</div>
 			</div>
 		</form:form>

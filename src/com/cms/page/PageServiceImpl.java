@@ -4,8 +4,11 @@ All rights reserved
 */
 package com.cms.page;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,24 +26,48 @@ public class PageServiceImpl implements PageService{
 
 	@Override
 	public void insertPage(PageDto page) {
-		pageDao.insertPage(page);
+		this.pageDao.insertPage(page);
+	}
+
+	@Override
+	public void updatePage(PageDto page) {
+		this.pageDao.updatePage(page);
+	}
+
+	@Override
+	public void deletePage(PageDto page) {
+		this.pageDao.deletePage(page);
 	}
 
 	@Override
 	public PageDto selectPageById(long pid) {
-		PageDto byId = pageDao.selectPageById(pid);
-		return byId;
+		PageDto selectPageById = this.pageDao.selectPageById(pid);
+		Hibernate.initialize(selectPageById);
+		return selectPageById;
+	}
+
+	@Override
+	public PageDto selectPageByName(String pageName) {
+		PageDto selectPageByName = this.pageDao.selectPageByName(pageName);
+		return selectPageByName;
 	}
 
 	@Override
 	public List<PageDto> selectAllPage() {
-		return pageDao.selectAllPage();
+		List<PageDto> selectAllPage = this.pageDao.selectAllPage();
+		return selectAllPage;
 	}
-	
-	public static void main(String[] args) {
-		PageDaoImpl daoImpl = new PageDaoImpl();
-		PageDto id = daoImpl.selectPageById(1);
-		System.out.println(id);
+
+	@Override
+	public Map<Long, String> selectAll() throws SQLException {
+		Map<Long, String> selectAll = this.pageDao.selectAll();
+		return selectAll;
+	}
+
+	@Override
+	public PageDto vaildatePage(String pageName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 		
 }

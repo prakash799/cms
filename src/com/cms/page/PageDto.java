@@ -5,13 +5,27 @@ All rights reserved
 package com.cms.page;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
+import com.cms.navigation.Navigation;
 
 @Entity
 @Table(name = "page")
@@ -21,25 +35,35 @@ public class PageDto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "PAGE_ID")
 	private long pid;
-	@Column(name="PAGE_NAME")
+
+	@Column(name = "PAGE_NAME")
 	private String pageName;
-	@Column(name="PAGE_TITLE")
+
+	@Column(name = "PAGE_TITLE")
 	private String pageTitle;
-	@Column(name="PAGE_BODY")
+
+	@Lob
+	@Column(name = "PAGE_BODY")
 	private String pageBody;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "PAGE_NAVIGATION", joinColumns = @JoinColumn(name = "PAGE_ID"), inverseJoinColumns = @JoinColumn(name = "NAVIGATION_ID"))
+	private Set<Navigation> navigation;
 
 	public PageDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public PageDto(long pid, String pageName, String pageTitle, String pageBody) {
+	public PageDto(long pid, String pageName, String pageTitle,
+			String pageBody, Set<Navigation> navigation) {
 		super();
 		this.pid = pid;
 		this.pageName = pageName;
 		this.pageTitle = pageTitle;
 		this.pageBody = pageBody;
+		this.navigation = navigation;
 	}
 
 	public long getPid() {
@@ -74,6 +98,14 @@ public class PageDto implements Serializable {
 		this.pageBody = pageBody;
 	}
 
+	public Set<Navigation> getNavigation() {
+		return navigation;
+	}
+
+	public void setNavigation(Set<Navigation> navigation) {
+		this.navigation = navigation;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -82,6 +114,8 @@ public class PageDto implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((navigation == null) ? 0 : navigation.hashCode());
 		result = prime * result
 				+ ((pageBody == null) ? 0 : pageBody.hashCode());
 		result = prime * result
@@ -101,6 +135,11 @@ public class PageDto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PageDto other = (PageDto) obj;
+		if (navigation == null) {
+			if (other.navigation != null)
+				return false;
+		} else if (!navigation.equals(other.navigation))
+			return false;
 		if (pageBody == null) {
 			if (other.pageBody != null)
 				return false;
@@ -124,7 +163,8 @@ public class PageDto implements Serializable {
 	@Override
 	public String toString() {
 		return "PageDto [pid=" + pid + ", pageName=" + pageName
-				+ ", pageTitle=" + pageTitle + ", pageBody=" + pageBody + "]";
+				+ ", pageTitle=" + pageTitle + ", pageBody=" + pageBody
+				+ ", navigation=" + navigation + "]";
 	}
 
 }

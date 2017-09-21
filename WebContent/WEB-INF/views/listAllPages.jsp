@@ -17,14 +17,21 @@
 				<th>Page Id</th>
 				<th>Page Name</th>
 				<th>Page Title</th>
+				<th>Action</th>
 			</tr>
 			</thead>
 			<tbody>
 			<c:forEach items="${allpages}" var="p">
 				<tr>
+					<td>${p.pid}</td>
 					<td>${p.pageName}</td>
 					<td>${p.pageTitle}</td>
-					<td>${p.pageBody}</td>
+					<td>
+					<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+						<a href="/spring_cms/page?id=${p.pid}" target="_blank"><input type="button" class="btn btn-info btn-xs" value="View Page"></a> | 
+						<a href="/spring_cms/editpage?id=${p.pid}"><input type="button" class="btn btn-primary btn-xs" value="Edit"></a> |
+						<a href="/spring_cms/deletepage?id=${p.pid}"><input type="button" onclick="return confirm('Are you sure to delete this page?')" class="btn btn-danger btn-xs" value="Delete"></a>
+					</td>
 				</tr>
 			</c:forEach>
 			</tbody>

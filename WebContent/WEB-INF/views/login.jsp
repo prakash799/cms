@@ -8,26 +8,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>|Login|</title>
 <style type="text/css">
-	.error{
-		color: red;
-	}
+	.error{color: red;font-family: cursive;}
+	.elementToFadeInAndOut {
+    -webkit-animation: fadeinout 5s linear forwards;
+    animation: fadeinout 5s linear forwards;
+}
+@-webkit-keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 		<%@include file="/WEB-INF/views/header.jsp"%>
-		<%@include file="/WEB-INF/views/commoninclude.jsp"%>		
+		<%@include file="/WEB-INF/views/commoninclude.jsp"%>	
+		<h2>${messages}</h2>
 		<form:form action="login" class="form-horizontal" method="post" modelAttribute="user">
 			<div class="form-group">
 			<div class="col-sm-4 col-sm-offset-4">
-				<form:input path="loginid" name="loginid" class="form-control" placeholder="Enter your Id" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Id'"/>
-				<form:errors path="loginid" cssClass="error" />
+				<form:input path="loginid" name="loginid" id="loginId" class="form-control" placeholder="Enter your Id" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Id'"/>
+				
 			</div>
 			</div>
 			<div class="form-group">
 			<div class="col-sm-4 col-sm-offset-4">
-				<form:input type="password" path="password" name="password"  class="form-control" placeholder="Enter your Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Password'"/>
-				<form:errors path="password" cssClass="error" />
+				<form:input type="password" path="password" name="password" id="password"  class="form-control" placeholder="Enter your Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Password'"/>
+				<div class=elementToFadeInAndOut><form:errors path="password" cssClass="error"/></div>
+				<div class=elementToFadeInAndOut><form:errors path="loginid" cssClass="error" /></div>
 			</div>
 			</div>
 			<div class="col-sm-1 col-sm-offset-4">

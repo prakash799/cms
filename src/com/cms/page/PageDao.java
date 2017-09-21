@@ -4,6 +4,7 @@ All rights reserved
  */
 package com.cms.page;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +18,11 @@ public interface PageDao {
 
 	public PageDto selectPageById(long pid);
 
+	public PageDto selectPageByName(String pageName);
+
 	public List<PageDto> selectAllPage();
+
+	public Map<Long, String> selectAll() throws SQLException;
+
+	public PageDto vaildatePage(String pageName);
 }

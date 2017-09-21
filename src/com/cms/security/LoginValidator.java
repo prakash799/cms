@@ -38,27 +38,24 @@ public class LoginValidator implements Validator{
 		String loginid = user.getLoginid();
 		String password = user.getPassword();
 		
-		if (loginid.trim().equals("")||password.trim().equals("")) {
-			User validateUser=null;
-			try {
-				validateUser = userService.validateUser(loginid, password);
-				if(GlobalNullChecker.empty(loginid)) {
-					error.rejectValue("loginid", "error.loginid");
-				}else if (validateUser==null) {
-					error.rejectValue("loginid", "error.notexisted"); 
+		if (loginid != null && password != null) {
+				if((loginid.trim().equals(""))||(password.trim().equals(""))) {
+					error.rejectValue("loginid", "error.loginidlogin");
+				}else if(!(loginid.trim().equals(""))||!(password.trim().equals(""))) {
+					try {
+						User userById = userService.validateUser(loginid, password);
+						if(userById==null) {
+							error.rejectValue("loginid", "error.invaildcredentials");
+						}
+					}catch(NumberFormatException e) {
+							error.rejectValue("loginid", "error.loginidnotNumber");
+					} catch (NoSuchAlgorithmException e) {
+						e.printStackTrace();
+					}catch(NullPointerException e) {
+						error.rejectValue("loginid", "error.usernotexists");
+					}
 				}
-			} catch (NoSuchAlgorithmException e) {
-				
-			}catch (NumberFormatException e) {
-				error.rejectValue("loginid", "error.loginidnotNumber");
 			}
-			
-			
-			
-			
-			if(GlobalNullChecker.empty(password))
-				error.rejectValue("password", "error.password");
-		}
 		
 	}
 

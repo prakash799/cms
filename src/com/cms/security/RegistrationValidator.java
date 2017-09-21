@@ -86,5 +86,6 @@ public class RegistrationValidator implements Validator {
 			if(!GlobalNullChecker.isNullObject(user)) { 
 			error.rejectValue("loginid", "error.idalreadyexists");
 			}
+			
 	}
 }

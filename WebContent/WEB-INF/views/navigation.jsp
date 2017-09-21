@@ -47,8 +47,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navigation <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Create New</a></li>
-            <li><a href="#">List All</a></li>
+            <li><a href="opennavigation">Create New</a></li>
+            <li><a href="listnavigation">List All</a></li>
           </ul>
         </li>
         <li class="dropdown">

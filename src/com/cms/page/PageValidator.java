@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import sun.java2d.pipe.ValidatePipe;
+
 import com.cms.util.GlobalNullChecker;
 
 @Component("pagevaildator")
@@ -38,19 +40,24 @@ public class PageValidator implements Validator{
 		
 		if(pageName!=null||pageTitle!=null||pageBody!=null) {
 			
-			if(GlobalNullChecker.empty(pageName))
-			error.rejectValue("pageName", "error.pagename");
+			if(GlobalNullChecker.empty(pageName)) {
+				error.rejectValue("pageName", "error.pagename");
+			}
 			
-			if(GlobalNullChecker.empty(pageTitle))
+			if(GlobalNullChecker.empty(pageTitle)) {
 				error.rejectValue("pageTitle", "error.pagetitle");
-			
+			}
 			if(GlobalNullChecker.empty(pageBody))
 				error.rejectValue("pageBody", "error.pagebody");
 			
-			/*	PageDto selectPageById = this.service.selectPageById(page.getPid());
-				System.out.println("selectPageById-->"+selectPageById);
-			if (selectPageById != null)
-					error.rejectValue("pid", "error.pagealreadyexist");*/
+			
+			page = service.selectPageByName(pageName);
+			if(!GlobalNullChecker.isNullObject(page)) {
+				error.rejectValue("pageName", "error.pageAlreadyexists");
+			}
+			
+			
+			
 		}
 		
 	}

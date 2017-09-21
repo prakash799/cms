@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.servlet.FlashMap;
 
 import com.cms.security.LoginValidator;
 import com.cms.security.RegistrationValidator;
@@ -68,7 +69,6 @@ public class UserController {
 	@RequestMapping(value= {"login"},method= {RequestMethod.POST,RequestMethod.GET})
 	public String doLogin(@ModelAttribute("user")@Valid User user,Model model,BindingResult result,HttpSession session) {
 		session.removeAttribute("user");
-		System.out.println(user);
 		if ((user.getLoginid() != null) && (user.getPassword() != null)) {
 			this.loginVaildator.validate(user, result);
 			if(result.hasErrors()) {
@@ -133,5 +133,14 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="logout",method=RequestMethod.GET)
+	public String logoutUser(HttpSession session) {
+		if(session!=null) {
+		session.invalidate();
+		}
+		 
+		 return "redirect:login";
 	}
 }
