@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.ModelAndView;
 
-import com.cms.exception.CustomGenericException;
 import com.cms.security.LoginValidator;
 import com.cms.security.UpdateValidator;
 
@@ -92,15 +91,6 @@ public class UserController {
 	}
 	
 
-	@ExceptionHandler(CustomGenericException.class)
-    public ModelAndView handleCustomException(CustomGenericException ex,Model model){
-		
-		ModelAndView error = new ModelAndView("error");
-		error.addObject("errCode", ex.getErrCode());
-		error.addObject("errMsg", ex.getErrMsg());
-        return error;
-    }   
-	
 	@RequestMapping(value= {"showuserdetails"},method= {RequestMethod.GET,RequestMethod.POST})
 	public String showUser(@ModelAttribute("user")@Valid User user,Model model,BindingResult result) {
 		List<User> allUsers = userService.listAllUsers();
