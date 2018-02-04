@@ -9,8 +9,10 @@
 
 </head>
 <body>
+<%@include file="/WEB-INF/views/template_header.jspf" %>
 <div class="container">
 ${page.pageBody }
 </div>
+<%@include file="/WEB-INF/views/template_footer.jspf" %>
 </body>
 </html>

@@ -37,7 +37,10 @@
 			</div>
 			
 				<script>
-						CKEDITOR.replace( 'pageBody', { });
+						CKEDITOR.replace( 'pageBody', {
+						    filebrowserBrowseUrl : 'staticresources/elFinder/elfinder-cke.html',
+						    uiColor : '#9AB8F3'
+						});
 				</script>
 			<div class="form-group">
 			<div class="col-sm-3 col-sm-offset-1">

@@ -5,25 +5,19 @@ All rights reserved
 package com.cms.img_video;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 @Entity
 @Table(name = "docs_data")
-public class DocumentDto implements Serializable{
+public class DocumentDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,12 +32,19 @@ public class DocumentDto implements Serializable{
 	@Column(name = "FILE_TYPE")
 	private String fileType;
 
-	@Lob
-	@Column(name = "FILE_CONTENT")
-	private String content;
-
 	@Column(name = "CREATION_DATE")
 	private Date creationDate;
+
+	@Column(name = "FILE_SIZE")
+	private long fileSize;
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
 
 	public long getId() {
 		return id;
@@ -77,14 +78,6 @@ public class DocumentDto implements Serializable{
 		this.fileType = fileType;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -97,7 +90,7 @@ public class DocumentDto implements Serializable{
 	public String toString() {
 		return "DocumentDto [id=" + id + ", fileName=" + fileName
 				+ ", location=" + location + ", fileType=" + fileType
-				+ ", content=" + content + ", creationDate=" + creationDate
+				+ ", creationDate=" + creationDate + ", fileSize=" + fileSize
 				+ "]";
 	}
 

@@ -4,9 +4,12 @@ All rights reserved
  */
 package com.cms.user;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.orm.hibernate4.HibernateSystemException;
+import org.springframework.transaction.CannotCreateTransactionException;
 
 public interface UserDao {
 
@@ -18,7 +21,8 @@ public interface UserDao {
 
 	public User getUserById(long id);
 
-	public User validateUser(String loginid);
+	public User validateUser(String loginid)throws CannotCreateTransactionException;
 
 	public List<User> listAllUsers();
+
 }

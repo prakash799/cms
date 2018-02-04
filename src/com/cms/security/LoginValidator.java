@@ -5,9 +5,13 @@ All rights reserved
 package com.cms.security;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -38,6 +42,7 @@ public class LoginValidator implements Validator{
 		String loginid = user.getLoginid();
 		String password = user.getPassword();
 		
+		
 		if (loginid != null && password != null) {
 				if((loginid.trim().equals(""))||(password.trim().equals(""))) {
 					error.rejectValue("loginid", "error.loginidlogin");
@@ -56,7 +61,5 @@ public class LoginValidator implements Validator{
 					}
 				}
 			}
-		
-	}
-
+		}
 }

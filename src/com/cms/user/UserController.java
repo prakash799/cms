@@ -7,6 +7,7 @@ package com.cms.user;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,27 +15,28 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
+import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.servlet.FlashMap;
 
+import com.cms.exception.CustomGenericException;
 import com.cms.security.LoginValidator;
-import com.cms.security.RegistrationValidator;
 import com.cms.security.UpdateValidator;
-import com.cms.util.JasonResponse;
+
 
 @Controller
 public class UserController {
+	
 	
 	@Autowired
 	@Qualifier("updatevalidator")
@@ -66,6 +68,7 @@ public class UserController {
 		return "login";
 	}
 	
+	
 	@RequestMapping(value= {"login"},method= {RequestMethod.POST,RequestMethod.GET})
 	public String doLogin(@ModelAttribute("user")@Valid User user,Model model,BindingResult result,HttpSession session) {
 		session.removeAttribute("user");
@@ -79,6 +82,7 @@ public class UserController {
 					u=this.userService.validateUser(user.getLoginid(), user.getPassword());
 				} catch (NoSuchAlgorithmException e) {
 					e.printStackTrace();
+					return "login";
 				}
 				session.setAttribute("user", u);
 				return "admin";
@@ -87,6 +91,15 @@ public class UserController {
 		return "login";
 	}
 	
+
+	@ExceptionHandler(CustomGenericException.class)
+    public ModelAndView handleCustomException(CustomGenericException ex,Model model){
+		
+		ModelAndView error = new ModelAndView("error");
+		error.addObject("errCode", ex.getErrCode());
+		error.addObject("errMsg", ex.getErrMsg());
+        return error;
+    }   
 	
 	@RequestMapping(value= {"showuserdetails"},method= {RequestMethod.GET,RequestMethod.POST})
 	public String showUser(@ModelAttribute("user")@Valid User user,Model model,BindingResult result) {
@@ -116,7 +129,7 @@ public class UserController {
 	
 	@RequestMapping(value= {"getuserdetails"},method= {RequestMethod.POST,RequestMethod.GET},produces = "application/json")
 	public @ResponseBody  User getUserDetails(@RequestParam(value="id",required=true)long id,@ModelAttribute("user")User user,Model model,HttpServletResponse response) {
-		String userId=id+"";
+		//String userId=id+"";
 		if(id!=0) 
 			user = this.userService.getUserById(id);
 			return user;

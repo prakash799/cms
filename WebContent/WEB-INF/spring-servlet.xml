@@ -79,7 +79,7 @@
      <!-- Multipart Configuration -->
      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		 <!-- setting maximum upload size -->
-		<property name="maxUploadSize" value="100000000000" />
+		<property name="maxUploadSize" value="268435456" />
 	</bean>
 		
 	<!-- <mvc:interceptors>

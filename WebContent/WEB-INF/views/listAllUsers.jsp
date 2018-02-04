@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
 <title>|User Details|</title>
 <%@include file="/WEB-INF/views/commoninclude.jsp"%>
 <%@include file="/WEB-INF/views/navigation.jsp"%>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/staticresources/scripts/custom.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/staticresources/scripts/custom.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+	 $('#example').DataTable();
+});
+
 	function openpopupForm() {
 		$("#dialog-1").dialog({
 			autoOpen : false,
@@ -56,7 +57,7 @@
 <body>
 	<div class="container-fluid">
 	<a href="registration"><button class="btn btn-primary btn-xs">Add User</button> </a>
-		<table class="table table-responsive">
+		<table id="example" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -66,6 +67,15 @@
 					<th>Choose Action</th>
 				</tr>
 			</thead>
+			<tfoot>
+			<tr>
+					<th>Name</th>
+					<th>Login id</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>Choose Action</th>
+				</tr>
+			</tfoot>
 			<tbody>
 				<c:forEach items="${userlist}" var="element">
 					<tr>
@@ -79,8 +89,7 @@
 									<c:url var="deleteUrl" value="/delete" scope="request" />
 									<form id="${userFromId}" action="${deleteUrl}" method="post">
 										<input type="hidden" id="id" name="id" value="${element.id}">
-										<input type="submit" class="btn btn-danger btn-xs"
-											value="Delete" onclick="return confirm('Are you Sure?')">
+										<input type="submit" class="btn btn-danger btn-xs" value="Delete" onclick="return confirm('Are you Sure?')">
 									</form>
 								</div>
 								<div class="col-md-2">

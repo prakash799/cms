@@ -4,6 +4,7 @@ All rights reserved
 */
 package com.cms.user;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,4 +82,5 @@ public class UserDaoImpl implements UserDao{
 		List<User> list = currentSession.createCriteria(User.class).list();
 		return list;
 	}
+	
 }

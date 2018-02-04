@@ -5,12 +5,17 @@ All rights reserved
 package com.cms.user;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.CannotCreateTransactionException;
 
 import com.cms.security.EncryptPassword;
 
@@ -57,7 +62,7 @@ public class UserServiceImpl implements UserService{
 	
 
 	@Override
-	public User validateUser(String loginid, String password) throws NoSuchAlgorithmException,NumberFormatException {
+	public User validateUser(String loginid, String password) throws NoSuchAlgorithmException,NumberFormatException,CannotCreateTransactionException {
 		//String validatedPassword = validatePassword(password);
 		//System.out.println("validatedPassword------"+validatedPassword);
 		User validatedUser = userDao.validateUser(loginid);
@@ -69,7 +74,7 @@ public class UserServiceImpl implements UserService{
 		}
 		return null;
 	}
-
+	
 
 	@Override
 	public List<User> listAllUsers() {

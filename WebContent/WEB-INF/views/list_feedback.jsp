@@ -7,10 +7,15 @@
 <title>|List All Feedback|</title>
 <%@include file="/WEB-INF/views/commoninclude.jsp"%>
 <%@include file="/WEB-INF/views/navigation.jsp"%>
+<script type="text/javascript">
+$(document).ready(function(){
+	 $('#example').DataTable();
+});
+</script>
 </head>
 <body>
 <div class="container-fluid">
-	<table class="table table-responsive">
+	<table id="example" class="display" cellspacing="0" width="100%">
     <thead>
       <tr>
         <th>User Name</th>
@@ -19,6 +24,14 @@
         <th>Comments</th>
       </tr>
     </thead>
+    <tfoot>
+    <tr>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Comments</th>
+      </tr>
+    </tfoot>
     <tbody>
     <c:forEach items="${listfeedback}" var="element">
       <tr>
